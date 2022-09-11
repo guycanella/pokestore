@@ -1,0 +1,49 @@
+.pokemon-minicart {
+	position: relative;
+	padding: 0.5rem;
+
+	&__button {
+		border: none;
+		background-color: #fff;
+		display: block;
+		margin-left: auto;
+	}
+
+	&__cart {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		width: 100vw;
+		height: 90vh;
+		padding: 0.5rem;
+		box-shadow: 0 0 0.2rem 0 #000;
+		background-color: #fff;
+		top: 0;
+		left: calc(100% + 2px);
+		transition: left 0.5s;
+
+		&__header {
+			&--closeBtn {
+				display: block;
+				margin-left: auto;
+				border: none;
+				background-color: #fff;
+			}
+		}
+
+		&__content {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+
+			h3 {
+				text-align: center;
+			}
+		}
+	}
+
+	.active {
+		left: 0;
+	}
+}
