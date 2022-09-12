@@ -3,7 +3,7 @@ import { PokemonCartMobile } from "./components/PokemonCartMobile";
 import { PokemonGrid } from "./components/PokemonGrid";
 import { SearchPokemon } from "./components/SearchPokemon";
 
-type SearchPokemonProps = {
+export type SearchPokemonProps = {
 	name: string;
 	url: string;
 };

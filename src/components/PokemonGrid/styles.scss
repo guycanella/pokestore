@@ -1,0 +1,152 @@
+.grid-results {
+	height: 80vh;
+	overflow-y: scroll;
+	display: grid;
+	padding: 0.5rem;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+
+	&__pokemonCard {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding: 0.5rem;
+		border: 1px solid #c3c3c3;
+		border-radius: 4px;
+
+		&--info {
+			position: absolute;
+			top: 4%;
+			right: 5%;
+			background-color: #fff;
+			border: none;
+		}
+
+		&--img {
+			width: 80%;
+			margin-left: auto;
+			margin-right: auto;
+			aspect-ratio: 1/1;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+
+			img {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		}
+
+		&--name {
+			text-transform: uppercase;
+			font-weight: bold;
+			text-align: center;
+		}
+
+		&--types {
+			display: flex;
+			justify-content: center;
+			gap: 4px;
+
+			span {
+				padding: 0.1rem 0.5rem;
+				text-transform: uppercase;
+				font-size: 0.8rem;
+				color: #fff;
+				font-weight: bold;
+				border-radius: 4px;
+
+				&.normal {
+					background-color: #a8a77a;
+				}
+
+				&.water {
+					background-color: #6390f0;
+				}
+
+				&.grass {
+					background-color: #7ac74c;
+				}
+
+				&.ice {
+					background-color: #96d9d6;
+				}
+
+				&.fighting {
+					background-color: #c22e28;
+				}
+
+				&.poison {
+					background-color: #a33ea1;
+				}
+
+				&.flying {
+					background-color: #a98ff3;
+				}
+
+				&.psychic {
+					background-color: #f95587;
+				}
+
+				&.rock {
+					background-color: #b6a136;
+				}
+
+				&.dragon {
+					background-color: #6f35fc;
+				}
+
+				&.dark {
+					background-color: #705746;
+				}
+
+				&steel {
+					background-color: #b7b7ce;
+				}
+
+				&.fairy {
+					background-color: #d685ad;
+				}
+
+				&.ground {
+					background-color: #e2bf65;
+				}
+
+				&.fire {
+					background-color: #ee8130;
+				}
+
+				&.electric {
+					background-color: #f7d02c;
+				}
+
+				&.ghost {
+					background-color: #735797;
+				}
+
+				&.bug {
+					background-color: #a6b91a;
+				}
+			}
+		}
+
+		&--price {
+			text-align: center;
+			text-transform: uppercase;
+			font-weight: bold;
+		}
+
+		&--addToCart {
+			text-transform: uppercase;
+			word-wrap: break-word;
+			font-weight: bold;
+			border-radius: 4px;
+			background-color: #0082c3;
+			border: none;
+			color: #fff;
+			padding: 0.3rem 0;
+		}
+	}
+}
