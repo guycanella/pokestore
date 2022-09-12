@@ -1,6 +1,7 @@
 import { Info } from "phosphor-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { SearchPokemonProps, Union } from "../../App";
+import { AddToCartButton } from "./AddToCartButton";
 
 import "./styles.scss";
 
@@ -13,7 +14,7 @@ type BasicProps = {
 	url: string;
 };
 
-type InfoPokemonProps = {
+export type InfoPokemonProps = {
 	abilities: Array<{
 		ability: BasicProps;
 		is_hidden: boolean;
@@ -94,9 +95,6 @@ export const PokemonGrid = ({ results }: PokemonGridProps) => {
 		});
 	}, [results, fetchInfoPokemon, ids]);
 
-	console.log("results length", results.length);
-	console.log("infoPokemon length", infoPokemon.length);
-	console.log({ infoPokemon });
 	return (
 		<div className="grid-results">
 			{infoPokemon.map((pokemon) => {
@@ -127,9 +125,7 @@ export const PokemonGrid = ({ results }: PokemonGridProps) => {
 							})}
 						</div>
 						<p className="grid-results__pokemonCard--price">$ 23,50</p>
-						<button className="grid-results__pokemonCard--addToCart">
-							adicionar ao carrinho
-						</button>
+						<AddToCartButton pokemon={pokemon} />
 					</div>
 				);
 			})}

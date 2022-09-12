@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, createContext } from "react";
 import { PokemonCartMobile } from "./components/PokemonCartMobile";
 import { PokemonGrid } from "./components/PokemonGrid";
 import { SearchPokemon } from "./components/SearchPokemon";
@@ -8,12 +8,30 @@ export type SearchPokemonProps = {
 	url: string;
 };
 
+export type CartPokemonProps = {
+	name: string;
+	id: number;
+	sprite: string | undefined;
+	price: number;
+};
+
 export type Union = SearchPokemonProps[] | [];
+
+type ContextProps = {
+	state: CartPokemonProps[];
+	setState: (item: CartPokemonProps[]) => void;
+};
+
+export const MinicartContext = createContext<ContextProps>({
+	state: [{} as CartPokemonProps],
+	setState() {},
+});
 
 function App() {
 	const setpArr = useMemo(() => [1, 2, 3, 4], []);
 	const [selectedPokemon, setSelectedPokemon] = useState<Union>([]);
 	const [allPokemon, setAllPokemon] = useState<Union>([]);
+	const [minicart, setMinicart] = useState<CartPokemonProps[]>([]);
 
 	useEffect(() => {
 		const fetchAllPokemonData = async () => {
@@ -40,17 +58,18 @@ function App() {
 		});
 	}, [allPokemon, setpArr]);
 
-	console.log(selectedPokemon);
-	// const handleSelectPokemon = () => {};
-
 	return (
 		<section className="main-container">
 			<div className="main-container__header">
 				<SearchPokemon />
 			</div>
 			<div className="main-container__content">
-				<PokemonCartMobile />
-				<PokemonGrid results={selectedPokemon} />
+				<MinicartContext.Provider
+					value={{ state: minicart, setState: setMinicart }}
+				>
+					<PokemonCartMobile />
+					<PokemonGrid results={selectedPokemon} />
+				</MinicartContext.Provider>
 			</div>
 		</section>
 	);
