@@ -1,17 +1,24 @@
 .pokemon-minicart {
 	position: relative;
 	padding: 0.5rem;
-	width: 40%;
+
+	@media all and (min-width: 375px) and (max-width: 1023px) {
+		width: 100%;
+	}
 
 	@media all and (min-width: 1024px) {
+		width: 40%;
 		height: 50vh;
 	}
 
 	&__button {
 		border: none;
 		background-color: #fff;
-		display: block;
 		margin-left: auto;
+
+		@media all and (min-width: 375px) and (max-width: 1023px) {
+			display: block;
+		}
 
 		@media all and (min-width: 1024px) {
 			display: none;
@@ -19,37 +26,44 @@
 	}
 
 	&__cart {
-		position: absolute;
 		display: flex;
 		flex-direction: column;
-		width: 100vw;
-		height: 90vh;
 		padding: 0.5rem;
 		box-shadow: 0 0 0.2rem 0 #000;
 		background-color: #fff;
-		top: 0;
-		left: calc(100% + 2px);
 		transition: left 0.5s;
 		z-index: 10;
+
+		@media all and (min-width: 375px) and (max-width: 1023px) {
+			position: absolute;
+			width: 100vw;
+			height: 90vh;
+			top: 0;
+			left: calc(100vw + 2px);
+		}
 
 		@media all and (min-width: 1024px) {
 			position: relative;
 			width: 100%;
+			height: 50vh;
 			top: 0;
 			left: 0;
-			height: 50vh;
 		}
 
 		&__header {
+			@media all and (min-width: 375px) and (max-width: 1023px) {
+				display: block;
+			}
+
+			@media all and (min-width: 1024px) {
+				display: none;
+			}
+
 			&--closeBtn {
 				display: block;
 				margin-left: auto;
 				border: none;
 				background-color: #fff;
-			}
-
-			@media all and (min-width: 1024px) {
-				display: none;
 			}
 		}
 
