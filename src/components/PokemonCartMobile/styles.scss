@@ -1,12 +1,21 @@
 .pokemon-minicart {
 	position: relative;
 	padding: 0.5rem;
+	width: 40%;
+
+	@media all and (min-width: 1024px) {
+		height: 50vh;
+	}
 
 	&__button {
 		border: none;
 		background-color: #fff;
 		display: block;
 		margin-left: auto;
+
+		@media all and (min-width: 1024px) {
+			display: none;
+		}
 	}
 
 	&__cart {
@@ -23,6 +32,14 @@
 		transition: left 0.5s;
 		z-index: 10;
 
+		@media all and (min-width: 1024px) {
+			position: relative;
+			width: 100%;
+			top: 0;
+			left: 0;
+			height: 50vh;
+		}
+
 		&__header {
 			&--closeBtn {
 				display: block;
@@ -30,21 +47,141 @@
 				border: none;
 				background-color: #fff;
 			}
+
+			@media all and (min-width: 1024px) {
+				display: none;
+			}
 		}
 
 		&__content {
 			flex: 1;
 			display: flex;
 			flex-direction: column;
-			justify-content: space-evenly;
+			justify-content: space-between;
 
 			h3 {
 				text-align: center;
 			}
+
+			&--items {
+				padding: 0.5rem;
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+				height: 10px;
+				gap: 0.5rem;
+				overflow-y: auto;
+
+				.minicart-pokemon-cell {
+					border-top: 1px solid #c3c3c3;
+					padding-top: 0.5rem;
+
+					&__header {
+						display: flex;
+						justify-content: space-between;
+
+						&--name {
+							font-weight: bold;
+							font-size: 1.25rem;
+							text-transform: uppercase;
+						}
+
+						&--removeBtn {
+							cursor: pointer;
+						}
+					}
+
+					&__body {
+						display: flex;
+						justify-content: space-between;
+						padding-top: 0.5rem;
+
+						&--pokeInfo {
+							margin-bottom: 0.5rem;
+						}
+
+						&--price {
+							span {
+								&:nth-child(1) {
+									font-weight: bold;
+									margin-right: 1ch;
+								}
+
+								&:last-child {
+									font-size: 0.8rem;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			&--summary {
+				border-top: 1px solid #c3c3c3;
+				padding-top: 0.5rem;
+
+				.pokemon-order__totalPrice {
+					margin-bottom: 1rem;
+					display: flex;
+					justify-content: space-between;
+
+					span {
+						font-weight: bold;
+						text-transform: uppercase;
+					}
+				}
+
+				.pokemon-order__buyingBtn {
+					width: 100%;
+					outline: none;
+					border: none;
+					border-radius: 4px;
+					background-color: #0082c3;
+					padding: 0.5rem 0;
+					text-transform: uppercase;
+					font-weight: bold;
+					color: #fff;
+					cursor: pointer;
+
+					&:active {
+						background-color: #6390f0;
+					}
+				}
+			}
+		}
+
+		.centering {
+			justify-content: space-evenly;
 		}
 	}
 
 	.active {
 		left: 0;
+	}
+}
+
+.modal-finalization {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 99;
+	background-color: rgba($color: #000000, $alpha: 0.4);
+
+	&__content {
+		background-color: #fff;
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 50vw;
+		height: 50vw;
+		border-radius: 4px;
+		text-align: center;
+		padding: 1rem 0;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 }

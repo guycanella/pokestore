@@ -1,12 +1,13 @@
-import { Info } from "phosphor-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { PokemonCard } from "./PokemonCard";
+
 import type { SearchPokemonProps, Union } from "../../App";
-import { AddToCartButton } from "./AddToCartButton";
 
 import "./styles.scss";
 
 type PokemonGridProps = {
 	results: Union;
+	searchedPokemon: InfoPokemonProps | undefined;
 };
 
 type BasicProps = {
@@ -68,7 +69,7 @@ export type InfoPokemonProps = {
 	weight: number;
 };
 
-export const PokemonGrid = ({ results }: PokemonGridProps) => {
+export const PokemonGrid = ({ results, searchedPokemon }: PokemonGridProps) => {
 	const [infoPokemon, setInfoPokemon] = useState<InfoPokemonProps[]>([]);
 	const ids = useMemo(() => {
 		return [] as string[];
@@ -96,39 +97,14 @@ export const PokemonGrid = ({ results }: PokemonGridProps) => {
 	}, [results, fetchInfoPokemon, ids]);
 
 	return (
-		<div className="grid-results">
-			{infoPokemon.map((pokemon) => {
-				return (
-					<div key={pokemon?.name} className="grid-results__pokemonCard">
-						<button className="grid-results__pokemonCard--info">
-							<Info size={24} />
-						</button>
-						<div className="grid-results__pokemonCard--img">
-							<img
-								src={pokemon?.sprites?.front_default}
-								alt={`Sprite principal do ${pokemon?.name}`}
-							/>
-						</div>
-						<p className="grid-results__pokemonCard--name">
-							#{pokemon?.id} {pokemon?.name.split("-")[0]}
-						</p>
-						<div className="grid-results__pokemonCard--types">
-							{pokemon?.types.map((type) => {
-								return (
-									<span
-										key={`${pokemon?.name}-type-${type?.type.name}`}
-										className={type?.type.name}
-									>
-										{type?.type.name}
-									</span>
-								);
-							})}
-						</div>
-						<p className="grid-results__pokemonCard--price">$ 23,50</p>
-						<AddToCartButton pokemon={pokemon} />
-					</div>
-				);
-			})}
+		<div className={`grid-results ${searchedPokemon ? "unsetHeight" : ""}`}>
+			{searchedPokemon ? (
+				<PokemonCard poke={searchedPokemon} />
+			) : (
+				infoPokemon.map((pokemon) => {
+					return <PokemonCard key={pokemon?.name} poke={pokemon} />;
+				})
+			)}
 		</div>
 	);
 };

@@ -1,14 +1,15 @@
+import { useContext } from "react";
 import { List } from "phosphor-react";
-import { useState } from "react";
+import { MinicartContext } from "../../App";
 import { CartSide } from "./CartSide";
 
 import "./styles.scss";
 
 export const PokemonCartMobile = () => {
-	const [isMinicartOpen, setIsMinicartOpen] = useState(false);
+	const cart = useContext(MinicartContext);
 
 	const handleOpenMinicart = () => {
-		setIsMinicartOpen(true);
+		cart.setIsMinicartOpen(true);
 	};
 
 	return (
@@ -16,7 +17,10 @@ export const PokemonCartMobile = () => {
 			<button className="pokemon-minicart__button" onClick={handleOpenMinicart}>
 				<List size={20} weight="bold" />
 			</button>
-			<CartSide isOpen={isMinicartOpen} setIsOpen={setIsMinicartOpen} />
+			<CartSide
+				isOpen={cart.isMinicartOpen}
+				setIsOpen={cart.setIsMinicartOpen}
+			/>
 		</nav>
 	);
 };

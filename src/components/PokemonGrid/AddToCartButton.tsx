@@ -1,6 +1,6 @@
 import { useContext, useMemo } from "react";
-import type { InfoPokemonProps } from ".";
 import { MinicartContext } from "../../App";
+import type { InfoPokemonProps } from ".";
 import type { CartPokemonProps } from "../../App";
 
 export const AddToCartButton = ({ pokemon }: { pokemon: InfoPokemonProps }) => {
@@ -16,7 +16,24 @@ export const AddToCartButton = ({ pokemon }: { pokemon: InfoPokemonProps }) => {
 	}, [pokemon?.id, pokemon?.name, pokemon?.sprites?.front_default]);
 
 	const handleAddToCart = (poke: CartPokemonProps): void => {
-		cart.setState((prevState: CartPokemonProps[]) => [...prevState, poke]);
+		const isFound = cart.minicartState.some((pokemon) => {
+			if (pokemon?.id === poke.id) {
+				return true;
+			}
+
+			return false;
+		});
+
+		if (!isFound) {
+			const auxArray = cart.minicartState;
+			auxArray.push(poke);
+			cart.minicartSetState(auxArray);
+			cart.setIsMinicartOpen(true);
+
+			return;
+		}
+
+		cart.setAddSamePokemon(true);
 	};
 
 	return (

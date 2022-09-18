@@ -1,7 +1,16 @@
-import { useState, useEffect, useMemo, createContext } from "react";
+import {
+	useState,
+	useEffect,
+	useMemo,
+	createContext,
+	useRef,
+	memo,
+} from "react";
 import { PokemonCartMobile } from "./components/PokemonCartMobile";
 import { PokemonGrid } from "./components/PokemonGrid";
 import { SearchPokemon } from "./components/SearchPokemon";
+import type { InfoPokemonProps } from "./components/PokemonGrid";
+import Modal from "./components/Modal";
 
 export type SearchPokemonProps = {
 	name: string;
@@ -18,13 +27,21 @@ export type CartPokemonProps = {
 export type Union = SearchPokemonProps[] | [];
 
 type ContextProps = {
-	state: CartPokemonProps[];
-	setState: (item: CartPokemonProps[]) => void;
+	minicartState: CartPokemonProps[];
+	minicartSetState: (item: CartPokemonProps[]) => void;
+	isMinicartOpen: boolean;
+	setIsMinicartOpen: (item: boolean) => void;
+	addSamePokemon: boolean | undefined;
+	setAddSamePokemon: (item: boolean | undefined) => void;
 };
 
 export const MinicartContext = createContext<ContextProps>({
-	state: [{} as CartPokemonProps],
-	setState() {},
+	minicartState: [{} as CartPokemonProps],
+	minicartSetState() {},
+	isMinicartOpen: false,
+	setIsMinicartOpen() {},
+	addSamePokemon: false,
+	setAddSamePokemon() {},
 });
 
 function App() {
@@ -32,6 +49,19 @@ function App() {
 	const [selectedPokemon, setSelectedPokemon] = useState<Union>([]);
 	const [allPokemon, setAllPokemon] = useState<Union>([]);
 	const [minicart, setMinicart] = useState<CartPokemonProps[]>([]);
+	const [isMinicartOpen, setIsMinicartOpen] = useState(false);
+	const [addSamePokemon, setAddSamePokemon] = useState<boolean | undefined>(
+		undefined
+	);
+	const [failedSearching, setFailedSearching] = useState<boolean | undefined>(
+		undefined
+	);
+	const [infoPokemon, setInfoPokemon] = useState<InfoPokemonProps | undefined>(
+		undefined
+	);
+
+	const failedModalRef = useRef<HTMLDivElement | null>(null);
+	const addModalRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
 		const fetchAllPokemonData = async () => {
@@ -61,18 +91,47 @@ function App() {
 	return (
 		<section className="main-container">
 			<div className="main-container__header">
-				<SearchPokemon />
+				<SearchPokemon
+					searchPokemon={setInfoPokemon}
+					setFailedSearching={setFailedSearching}
+				/>
 			</div>
 			<div className="main-container__content">
 				<MinicartContext.Provider
-					value={{ state: minicart, setState: setMinicart }}
+					value={{
+						minicartState: minicart,
+						minicartSetState: setMinicart,
+						isMinicartOpen,
+						setIsMinicartOpen,
+						addSamePokemon,
+						setAddSamePokemon,
+					}}
 				>
 					<PokemonCartMobile />
-					<PokemonGrid results={selectedPokemon} />
+					<PokemonGrid
+						results={selectedPokemon}
+						searchedPokemon={infoPokemon}
+					/>
 				</MinicartContext.Provider>
 			</div>
+			<Modal
+				mainClass="failedModal"
+				isOpen={failedSearching}
+				setIsOpen={setFailedSearching}
+				reference={failedModalRef}
+			>
+				<h2>Pokemon não encontrado.</h2>
+			</Modal>
+			<Modal
+				mainClass="failedModal"
+				isOpen={addSamePokemon}
+				setIsOpen={setAddSamePokemon}
+				reference={addModalRef}
+			>
+				<h2>Você não pode adicionar o mesmo Pokemon novamente no carrinho!</h2>
+			</Modal>
 		</section>
 	);
 }
 
-export default App;
+export default memo(App);

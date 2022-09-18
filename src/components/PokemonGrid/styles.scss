@@ -6,6 +6,15 @@
 	grid-template-columns: 1fr 1fr;
 	gap: 0.5rem;
 
+	@media all and (min-width: 768px) {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	@media all and (min-width: 1024px) {
+		width: 55%;
+		height: 80%;
+	}
+
 	&__pokemonCard {
 		position: relative;
 		display: flex;
@@ -147,6 +156,19 @@
 			border: none;
 			color: #fff;
 			padding: 0.3rem 0;
+			cursor: pointer;
+
+			&:active {
+				background-color: #6390f0;
+			}
 		}
+	}
+}
+
+.unsetHeight {
+	height: unset;
+
+	@media all and (min-width: 1024px) {
+		height: 100%;
 	}
 }
